@@ -48,6 +48,16 @@
                 <label for="description" class="form-label">Descrizione</label>
                 <textarea class="form-control" id="description" rows="5" name="description">{{ old('description', $project->description) }}</textarea>
             </div>   
+            
+            <div class="mb-5">
+                <h4>Seleziona le tecnlogie utilizzate in questo progetto:</h4>
+                @foreach ($technologies as $technology)
+                    <div class="form-check">
+                        <input  @checked( $errors->any() ? in_array($technology->id, old('technologies', [])) : $project->technologies->contains($technology)) type="checkbox" id="tag-{{ $technology->id }}" value="{{ $technology->id }}" name="technologies[]">
+                        <label for="tag-{{ $technology->id }}">{{ $technology->name }}</label>
+                    </div>
+                @endforeach
+            </div>
 
             <button type="submit" class="btn btn-success d-inline-block"> 
                 <i class="fa-solid fa-pen-to-square"></i>

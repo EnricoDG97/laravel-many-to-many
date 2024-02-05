@@ -20,7 +20,8 @@
                     <thead>
                         <tr>
                             <th scope="col">Titolo</th>
-                            <th scope="col">Descrizione</th>
+                            <th scope="col">Tipologia</th>
+                            <th scope="col">Tecnologie</th>
                             <th scope="col">Azioni</th>
                         </tr>
                     </thead>
@@ -28,7 +29,18 @@
                         @foreach ($projects as $project)
                             <tr>
                                 <th scope="row"> {{ $project->slug }}</th>
-                                <td class="w-50">{{ $project->description }}</td>
+                                <td class="w-25">{{ optional($project->type)->name ?? 'Nessuna tipologia' }}</td>
+                                <td class="w-25">
+                                    @if ($project->technologies)
+                                        <ul>
+                                            @foreach ($project->technologies as $technology)
+                                                <li>{{ $technology->name }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        Nessuna tecnologia utilizzata
+                                    @endif
+                                </td>
                                 <td class="w-25">
                                     <a class="btn btn-success d-inline-block" href="{{ route('admin.projects.show', ['project' => $project->slug]) }}"> 
                                         <i class="fa-solid fa-circle-info"></i>

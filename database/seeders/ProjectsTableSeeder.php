@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
@@ -22,6 +23,9 @@ class ProjectsTableSeeder extends Seeder
             $project->title = $faker->sentence(4);
             $project->description = $faker->text(200);
             $project->slug = Str::slug($project->title);
+
+            $project->type_id = optional(Type::inRandomOrder()->first())->id;
+            
             $project->save();
         }
     }

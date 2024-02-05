@@ -52,12 +52,13 @@ class ProjectController extends Controller
             $path = Storage::put('thumbnails', $request->thumb);
             $project->thumb = $path;
         }
-
-        if($request->has('technologies')) {
-            $project->tags()->attach($request->technologies);
+        
+        $project->save();
+        
+        if ($request->has('technologies')) {
+            $project->technologies()->attach($request->technologies);
         }
 
-        $project->save();
         return redirect()->route('admin.projects.show', ['project' => $project->slug]);
     }
 
@@ -109,7 +110,7 @@ class ProjectController extends Controller
 
         $project->update($form_data);
 
-        if($request->has('technologies')) {
+        if ($request->has('technologies')) {
             $project->technologies()->sync($request->technologies);
         } else {
             $project->technologies()->sync([]);
